@@ -32,7 +32,14 @@ export default function Page() {
         console.log("player OFFLINE");
       });
     }
-  }, [channel, loaded]);
+
+    return () => {
+      // @ts-ignore
+      playerRef.current?.removeEventListener(Twitch.Player.ONLINE);
+      // @ts-ignore
+      playerRef.current?.removeEventListener(Twitch.Player.OFFLINE);
+    };
+  }, [loaded]);
 
   useEffect(() => {
     if (channel) {
